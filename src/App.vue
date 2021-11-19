@@ -1,17 +1,47 @@
 <template>
  <div class="container">
-   <Header />
+   <Header  title="Tack Tracker"/>
+   <Tasks :tasks="tasks"/>
  </div>
    
 </template>
 
 <script>
 import Header from './components/header.vue'
+import Tasks from './components/tasks.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Tasks
+  },
+  data() {
+    return {
+      tasks:[]
+    }
+  },
+  created(){
+    this.tasks = [
+      {
+        id:1,
+        text:'doctors Appointment',
+        day:'March 21 2:00pm',
+        reminder:true
+      },
+      {
+        id:2,
+        text:'Meeting At School',
+        day:'November 22nd 1:30pm',
+        reminder:true
+      },
+       {
+        id:3,
+        text:'Food Shopping',
+        day:'November 22nd 11:00am',
+        reminder:false
+      }
+    ]
   }
 }
 </script>
@@ -53,4 +83,15 @@ export default {
      font-size: 15px;
      font-family: inherit;
    }
+
+   .btn:focus {
+      outline: none;
+     }
+    .btn:active {
+      transform: scale(0.98);
+     }
+    .btn-block {
+        display: block;
+        width: 100%;
+      }
 </style>

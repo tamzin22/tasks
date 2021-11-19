@@ -1,7 +1,9 @@
 <template>
  <div class="container">
    <Header  title="Tack Tracker"/>
-   <Tasks :tasks="tasks"/>
+   <AddTask  @add-task="addTask"/>
+   <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+   
  </div>
    
 </template>
@@ -9,16 +11,32 @@
 <script>
 import Header from './components/header.vue'
 import Tasks from './components/tasks.vue'
+import AddTask from './components/addTask.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks
+    Tasks,
+    AddTask
   },
   data() {
     return {
       tasks:[]
+    }
+  },
+  methods: {
+    addTask(task){
+      this.tasks =[...this.tasks, task]
+    },
+    deleteTask(id){
+      if(confirm('Are you sure?')){
+       this.tasks = this.tasks.filter((task)=>task.id !==id)
+      }
+    },
+    toggleReminder(id){
+      this.tasks = this.tasks.map((task)=>task.id ==id ? {...task, reminder :!task.reminder} : task)
+     
     }
   },
   created(){
@@ -26,19 +44,19 @@ export default {
       {
         id:1,
         text:'doctors Appointment',
-        day:'March 21 2:00pm',
+        day:'March 21st at 2:00pm',
         reminder:true
       },
       {
         id:2,
         text:'Meeting At School',
-        day:'November 22nd 1:30pm',
+        day:'November 22nd at 1:30pm',
         reminder:true
       },
        {
         id:3,
         text:'Food Shopping',
-        day:'November 22nd 11:00am',
+        day:'November 22nd at 11:00am',
         reminder:false
       }
     ]
